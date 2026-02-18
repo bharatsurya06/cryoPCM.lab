@@ -1,0 +1,7 @@
+id,name,property,a,b,c,Tmin,Tmax
+PCM-001,n-hexane,liquid-specific-heat,0.1,0.2,120,150,300
+PCM-001,n-hexane,liquid-density,0.1,0.2,120,150,300
+PCM-001,n-hexane,liquid-thermal-conductivity,0.1,0.2,120,150,300
+PCM-001,n-hexane,solid-specific-heat,0.1,0.2,120,100,150
+PCM-001,n-hexane,solid-density,0.1,0.2,120,100,150
+PCM-001,n-hexane,solid-thermal-diffusivity,0.1,0.2,120,100,150
