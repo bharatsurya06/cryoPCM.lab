@@ -1,0 +1,4 @@
+id,name,tmin,tmax,latentHeat,quality,meltingPointK,boilingPointK,flashPointK,safetyRating,cost
+PCM-001,Dummy cryo-PCM A,100,300,180,high,170,300,210,A,12.5
+PCM-002,Dummy cryo-PCM B,100,300,165,medium,107,300,220,B,9.8
+PCM-003,Dummy cryo-PCM C,100,300,210,low,150,300,190,C,15

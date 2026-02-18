@@ -1,0 +1,58 @@
+{
+  "solid-specific-heat": [
+    { "temperatureK": 80, "value": 1.5 },
+    { "temperatureK": 90, "value": 1.7 },
+    { "temperatureK": 100, "value": 1.9 },
+    { "temperatureK": 110, "value": 2.1 },
+    { "temperatureK": 120, "value": 2.0 }
+  ],
+  "liquid-specific-heat": [
+    { "temperatureK": 130, "value": 2.3 },
+    { "temperatureK": 140, "value": 2.4 },
+    { "temperatureK": 150, "value": 2.5 },
+    { "temperatureK": 160, "value": 2.6 },
+    { "temperatureK": 170, "value": 2.7 }
+  ],
+  "solid-thermal-conductivity": [
+    { "temperatureK": 80, "value": 0.3 },
+    { "temperatureK": 90, "value": 0.32 },
+    { "temperatureK": 100, "value": 0.35 },
+    { "temperatureK": 110, "value": 0.34 },
+    { "temperatureK": 120, "value": 0.33 }
+  ],
+  "liquid-thermal-conductivity": [
+    { "temperatureK": 130, "value": 0.28 },
+    { "temperatureK": 140, "value": 0.29 },
+    { "temperatureK": 150, "value": 0.30 },
+    { "temperatureK": 160, "value": 0.31 },
+    { "temperatureK": 170, "value": 0.32 }
+  ],
+  "solid-density": [
+    { "temperatureK": 80, "value": 900 },
+    { "temperatureK": 90, "value": 895 },
+    { "temperatureK": 100, "value": 890 },
+    { "temperatureK": 110, "value": 885 },
+    { "temperatureK": 120, "value": 880 }
+  ],
+  "liquid-density": [
+    { "temperatureK": 130, "value": 830 },
+    { "temperatureK": 140, "value": 825 },
+    { "temperatureK": 150, "value": 820 },
+    { "temperatureK": 160, "value": 815 },
+    { "temperatureK": 170, "value": 810 }
+  ],
+  "solid-thermal-diffusivity": [
+    { "temperatureK": 80, "value": 1.2e-7 },
+    { "temperatureK": 90, "value": 1.3e-7 },
+    { "temperatureK": 100, "value": 1.35e-7 },
+    { "temperatureK": 110, "value": 1.4e-7 },
+    { "temperatureK": 120, "value": 1.42e-7 }
+  ],
+  "liquid-thermal-diffusivity": [
+    { "temperatureK": 130, "value": 0.9e-7 },
+    { "temperatureK": 140, "value": 0.95e-7 },
+    { "temperatureK": 150, "value": 1.0e-7 },
+    { "temperatureK": 160, "value": 1.02e-7 },
+    { "temperatureK": 170, "value": 1.05e-7 }
+  ]
+}

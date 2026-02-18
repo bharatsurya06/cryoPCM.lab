@@ -1,0 +1,17 @@
+CryoPCM-Lab Disclaimer
+----------------------
+
+The CryoPCM-Lab online tool and associated database are provided for research
+and educational purposes only. While efforts are made to ensure that the data
+and tools are accurate and up to date, no guarantees or warranties of any kind
+are made, either express or implied, regarding their completeness, accuracy,
+or suitability for any specific purpose.
+
+Use of the CryoPCM-Lab resources is at your own risk. The authors, maintainers,
+and affiliated institutions shall not be liable for any loss, damage, or
+consequences arising from the use of, or reliance on, the information or tools
+provided through this project.
+
+Users are responsible for independently verifying critical results and for
+ensuring that any use of the data or tools complies with applicable laws,
+regulations, and safety standards.

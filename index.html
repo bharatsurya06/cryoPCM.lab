@@ -4,70 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CryoPCM-Lab</title>
-
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 0;
-            background-color: #f4f7fb;
-            color: #222;
-        }
-
-        header {
-            background: #0b3d91;
-            color: white;
-            padding: 30px 20px;
-            text-align: center;
-        }
-
-        h1 {
-            margin: 0;
-        }
-
-        .tagline {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        main {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-        }
-
-        section {
-            margin-bottom: 35px;
-        }
-
-        h2 {
-            border-bottom: 2px solid #e6ecf5;
-            padding-bottom: 6px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9em;
-            color: #666;
-        }
-
-        a.button {
-            display: inline-block;
-            padding: 10px 18px;
-            background: #0b3d91;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            margin-top: 10px;
-        }
-
-        a.button:hover {
-            background: #072c6a;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
@@ -75,7 +12,7 @@
 <header>
     <h1>CryoPCM-Lab</h1>
     <p class="tagline">
-        Open repository of phase-change materials for cryogenic energy recovery
+        Open repository of thermophysical property data of cryogenic phase-change materials
     </p>
 </header>
 
@@ -112,16 +49,24 @@
             datasets to expand the CryoPCM-Lab.
         </p>
 
-        <a class="button" href="https://github.com/YOUR_USERNAME/CryoPCM-Lab">
-            View on GitHub
+        <a class="button" href="interface.html">
+            Explore database
         </a>
+        <p>
+            Before using the data or tools, please read the
+            <a href="disclaimer.html">project disclaimer</a>.
+        </p>
     </section>
 
 </main>
 
 <footer>
     <p>
-        Maintained as part of ongoing research in cryogenic energy storage systems.
+        Maintained as part of ongoing research at Process Intensification Laboratory, IIT Khargpur.
+        <p>
+            &copy; <span id="year"></span> Bharat Surya Chamarthi
+        </p>
+    
     </p>
 </footer>
 
