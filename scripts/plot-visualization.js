@@ -9,36 +9,64 @@
 
     /**
      * Draw a line chart of property vs. temperature in the given container.
+     * Uses polynomial definitions loaded from CSV (property_data.csv).
+     *
      * @param {string} containerId - ID of the DOM element (div) where the chart is drawn.
-     * @param {string} propertyKey - Key in chartData (e.g. 'solid-specific-heat').
-     * @param {Object} chartData - Object mapping property keys to arrays of { temperatureK, value }.
-     * @param {string|null} selectedPcmId - Currently selected PCM ID; chart data is only for PCM-001.
+     * @param {string} propertyKey - Property identifier (matches the dropdown value).
+     * @param {Array<Object>} propertyDefs - Array of definitions:
+     *   { pcmId, name, propertyType, a, b, c, tmin, tmax }.
+     * @param {string|null} selectedPcmId - Currently selected PCM ID.
      */
-    function drawPropertyChart(containerId, propertyKey, chartData, selectedPcmId) {
+    function drawPropertyChart(containerId, propertyKey, propertyDefs, selectedPcmId) {
         var container = document.getElementById(containerId);
         if (!container) return;
 
-        // Chart data is defined only for PCM-001
-        if (selectedPcmId && selectedPcmId !== 'PCM-001') {
-            container.innerHTML = '<p class="chart-message">Dummy chart data is defined only for Dummy cryo-PCM A (PCM-001). Please select PCM-001 in the search results to see the curve.</p>';
+        if (!selectedPcmId) {
+            container.innerHTML = '<p class="chart-message">Select a PCM from the search results to see the property curve.</p>';
             return;
         }
 
-        if (!chartData || !chartData[propertyKey] || chartData[propertyKey].length === 0) {
-            container.innerHTML = '<p class="chart-message">No chart data available.</p>';
+        if (!propertyDefs || !propertyDefs.length) {
+            container.innerHTML = '<p class="chart-message">No property data loaded from CSV.</p>';
             return;
         }
 
-        var series = chartData[propertyKey];
-        var x = series.map(function (p) { return p.temperatureK; });
-        var y = series.map(function (p) { return p.value; });
+        // Find matching definition for selected PCM and property
+        var matches = propertyDefs.filter(function (def) {
+            return def.pcmId === selectedPcmId && def.propertyType === propertyKey;
+        });
+
+        if (!matches.length) {
+            container.innerHTML = '<p class="chart-message">No matching property definition found in CSV for the selected PCM and property.</p>';
+            return;
+        }
+
+        var def = matches[0];
+        var a = Number(def.a);
+        var b = Number(def.b);
+        var c = Number(def.c);
+        var tmin = Number(def.tmin);
+        var tmax = Number(def.tmax);
+
+        if (!isFinite(a) || !isFinite(b) || !isFinite(c) || !isFinite(tmin) || !isFinite(tmax) || tmin >= tmax) {
+            container.innerHTML = '<p class="chart-message">Property definition in CSV is incomplete or invalid.</p>';
+            return;
+        }
+
+        var x = [];
+        var y = [];
+        for (var T = Math.round(tmin); T <= Math.round(tmax); T += 1) {
+            var val = a * T * T + b * T + c;
+            x.push(T);
+            y.push(val);
+        }
 
         var trace = {
             x: x,
             y: y,
             type: 'scatter',
             mode: 'lines+markers',
-            name: 'PCM-001',
+            name: selectedPcmId,
             line: { color: '#0b3d91', width: 2 },
             marker: { size: 8 }
         };
