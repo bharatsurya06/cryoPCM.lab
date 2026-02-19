@@ -27,7 +27,8 @@
         }
 
         if (!propertyDefs || !propertyDefs.length) {
-            container.innerHTML = '<p class="chart-message">No property data loaded from CSV.</p>';
+            container.innerHTML = '<p class="chart-message">No property data loaded from CSV. Check documentation/property_data.csv and ensure the page is served over HTTP (not file://).</p>';
+            console.log('plot-visualization: propertyDefs is empty or not loaded');
             return;
         }
 
@@ -37,7 +38,11 @@
         });
 
         if (!matches.length) {
-            container.innerHTML = '<p class="chart-message">No matching property definition found in CSV for the selected PCM and property.</p>';
+            var availablePcms = propertyDefs.map(function(d) { return d.pcmId; }).filter(function(v, i, a) { return a.indexOf(v) === i; });
+            var availableProps = propertyDefs.map(function(d) { return d.propertyType; }).filter(function(v, i, a) { return a.indexOf(v) === i; });
+            container.innerHTML = '<p class="chart-message">No matching property definition found in CSV for PCM "' + selectedPcmId + '" and property "' + propertyKey + '".<br>Available PCMs in CSV: ' + (availablePcms.length ? availablePcms.join(', ') : 'none') + '<br>Available properties: ' + (availableProps.length ? availableProps.join(', ') : 'none') + '</p>';
+            console.log('plot-visualization: No match found. Looking for pcmId="' + selectedPcmId + '", propertyType="' + propertyKey + '"');
+            console.log('plot-visualization: Loaded propertyDefs:', propertyDefs);
             return;
         }
 
