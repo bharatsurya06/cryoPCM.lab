@@ -10,16 +10,20 @@
 <body>
 
 <header>
-    <h1>CryoPCM-Lab</h1>
-    <p class="tagline">
-        Sample interface for exploring the PCM database
-    </p>
+    <div class="header-container">
+        <img src="assets/img/cryopcm.png" alt="CryoPCM.lab Logo" class="logo">
+        <nav class="navbar">
+            <a href="index.html" class="nav-link">About</a>
+            <a href="interface.html" class="nav-link active">Start Project</a>
+        </nav>
+    </div>
 </header>
 
-<main class="interface-layout">
-    <!-- Left zone: filters / inputs -->
-    <section class="zone-left">
-        <h2>Filter Materials</h2>
+<main class="main-content-80">
+    <div class="interface-layout">
+        <!-- Left zone: filters / inputs -->
+        <section class="zone-left">
+            <h2>Filter Materials</h2>
         <form class="pcm-filters" id="pcm-filters-form">
             <div class="form-row">
                 <label for="temperature-range"> Application temperature range (K)</label>
@@ -31,18 +35,15 @@
             </div>
             <div class="form-actions">
                 <button type="submit" class="button">Apply filters</button>
-                <button type="reset" class="button secondary">Reset</button>
+                <button type="reset" class="button">Reset</button>
             </div>
         </form>
 
-        <div id="search-status" class="search-status">
-            No search performed yet.
-        </div>
-        <div class="search-results">
-            <label for="result-select">Search results:</label>
-            <select id="result-select" disabled>
-                <option value="">No results yet</option>
-            </select>
+        <div class="materials-container">
+            <h3>Available Materials</h3>
+            <div class="materials-list" id="materials-list">
+                <p class="no-materials">Loading materials...</p>
+            </div>
         </div>
     </section>
 
@@ -108,11 +109,62 @@
             </div>
         </div>
     </section>
+</div>
+
+    <!-- Relevant Information Section -->
+    <section class="relevant-info-section">
+        <h2>Relevant Information</h2>
+        
+        <div class="info-paragraph">
+            <h3>Flash Point Temperature (K)</h3>
+            <p>The minimum temperature at which a material can vaporize and ignite in air. Used to assess fire hazard and handling safety requirements.</p>
+        </div>
+
+        <div class="info-paragraph">
+            <h3>Safety Classification</h3>
+            <p>A standardized rating system (e.g., GHS classification) indicating the health, environmental, and physical hazards. Common classifications include: Non-hazardous, Irritant, Toxic, Flammable, etc. Essential for safe handling, storage, and regulatory compliance.</p>
+        </div>
+
+        <div class="info-paragraph">
+            <h3>Additional Clarifications</h3>
+            <p><em>Placeholder for additional information to be added...</em></p>
+        </div>
+
+        <div class="info-paragraph">
+            <h3>Data Sources</h3>
+            <p>All material property data has been compiled from peer-reviewed scientific literature and open sources. <button onclick="openDataModal()" class="disclaimer-button">View data sources and references</button>.</p>
+        </div>
+
+    </section>
+
+    <!-- Data Sources Modal -->
+    <div id="dataModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Data Sources and References</h2>
+                <button class="close-btn" onclick="closeDataModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Material Property Data Sources</strong></p>
+                <p>The thermophysical properties of Phase Change Materials (PCMs) included in this database have been compiled from the following sources:</p>
+
+                <ul id="references-list">
+                    <li>Loading references...</li>
+                </ul>
+
+                <p><strong>Data Quality Notice:</strong> All data have been verified against original sources where possible. Please refer to the original publications for detailed methodologies and measurement conditions.</p>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeDataModal()" class="button">Close</button>
+            </div>
+        </div>
+    </div>
+
 </main>
 
 <footer>
     <p>
-        &copy; <span id="year"></span> CryoPCM-Lab (sample interface).
+         cryoPCM.Lab |  CBSradon | <span id="year"></span>  &copy;
     </p>
 </footer>
 

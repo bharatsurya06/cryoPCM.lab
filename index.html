@@ -10,10 +10,13 @@
 <body>
 
 <header>
-    <h1>CryoPCM-Lab</h1>
-    <p class="tagline">
-        Open repository of thermophysical property data of cryogenic phase-change materials
-    </p>
+    <div class="header-container">
+        <img src="assets/img/cryopcm.png" alt="CryoPCM.lab Logo" class="logo">
+        <nav class="navbar">
+            <a href="index.html" class="nav-link active">About</a>
+            <a href="interface.html" class="nav-link">Start Project</a>
+        </nav>
+    </div>
 </header>
 
 <main>
@@ -23,7 +26,7 @@
         <p>
             CryoPCM-Lab is an open scientific repository dedicated to collecting,
             curating, and visualizing thermophysical properties of phase-change
-            materials suitable for cryogenic energy recovery applications. This project is solely for educational purposes and is not intended for commercial use.
+            materials suitable for cryogenic energy recovery applications. This project is solely for educational purposes and is not intended for commercial use.  <button onclick="openDisclaimer()" class="disclaimer-button">Read full disclaimer</button>.
         </p>
     </section>
 
@@ -41,6 +44,8 @@
 
 
 
+
+
     <section>
         <h2>Repository Contents</h2>
         <ul>
@@ -49,35 +54,77 @@
             <li>🧪 Benchmark datasets for cryogenic applications</li>
             <li>🛠 Future tools for material selection and design</li>
         </ul>
-    </section>
-
-    <section>
-        <h2>Get Started</h2>
-        <p>
-            Browse the database, explore material properties, or contribute new
-            datasets to expand the CryoPCM-Lab.
-        </p>
-
         <a class="button" href="interface.html">
-            Explore database
+            Start Project
         </a>
-        <p>
-            Before using the data or tools, please read the
-            <a href="disclaimer.html">project disclaimer</a>.
-        </p>
     </section>
+
+            
+
 
 </main>
 
+<!-- Disclaimer Modal -->
+<div id="disclaimerModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Disclaimer</h2>
+            <button class="close-btn" onclick="closeDisclaimer()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p><strong>Attention Please!!</strong></p>
+        <p>
+            The cryoPCM.Lab online tool and associated database are provided for
+            research and educational purposes only. This solely acts a quick reference for the user. 
+            While reasonable efforts are
+            made to ensure that the data and tools are accurate and up to date,
+            no guarantees or warranties of any kind are made, either express or
+            implied, regarding their completeness, accuracy, reliability, or
+            suitability for any particular purpose. Users are advised to consult the original publications and verify data independently before applying them in engineering design, modeling, or commercial contexts. 
+        </p>
+        <p>
+            Use of the cryoPCM.Lab resources is at your own risk. The authors,
+            maintainers, and any affiliated institutions shall not be liable for
+            any loss, damage, or consequences arising from the use of, or
+            reliance on, the information or tools provided through this project.
+        </p>
+        <p>
+            The maintainer of this repository does not seek any monetization from this work. All material property data included in this repository are compiled from publicly available scientific literature and other open sources. Proper references to the original sources are provided wherever possible to ensure appropriate attribution. The original data remain the intellectual property of their respective authors, publishers, and rights holders. © 2026 CryoPCM-Lab. Only the compilation, structure, and visualizations are the work of the repository maintainer(s). Original data remain the property of their respective sources.
+        </p>
+        </div>
+    </div>
+</div>
+
 <footer>
     <p>
-        Maintained as part of ongoing research at Process Intensification Laboratory, IIT Khargpur.
+        Maintained as part of ongoing research at Process Intensification Laboratory, Cryogenic Engineering Centre, IIT Kharagpur.
         <p>
-            &copy; <span id="year"></span> Bharat Surya Chamarthi
+            &copy; <span id="year"></span> Bharat Surya Chamarthi aka CBSradon
         </p>
     
     </p>
 </footer>
+
+<script>
+    function openDisclaimer() {
+        document.getElementById('disclaimerModal').style.display = 'block';
+    }
+    
+    function closeDisclaimer() {
+        document.getElementById('disclaimerModal').style.display = 'none';
+    }
+    
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        const modal = document.getElementById('disclaimerModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+    
+    // Populate year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>

@@ -1,6 +1,67 @@
 // Set current year in footer
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// Data Sources Modal Functions
+function openDataModal() {
+    const modal = document.getElementById('dataModal');
+    if (modal) {
+        modal.style.display = 'block';
+    }
+}
+
+function closeDataModal() {
+    const modal = document.getElementById('dataModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Close modal when clicking outside of it
+window.onclick = function(event) {
+    const modal = document.getElementById('dataModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Load and display references from the JSON dataset or fallback list
+function loadAndDisplayReferences() {
+    const referencesList = document.getElementById('references-list');
+    if (!referencesList) {
+        return;
+    }
+
+    referencesList.innerHTML = '';
+
+    const fallbackReferences = [
+        'rawdata/property_series.json — primary property-series dataset used for the current material view.',
+        'rawdata/pcms.csv — master list of material metadata and key property summaries.',
+        'documentation/property_data.csv — source of property definitions and the corresponding variable relationships.',
+        'Open scientific literature and public datasheets compiled for cryogenic PCM research context.'
+    ];
+
+    fetch('rawdata/property_series.json')
+        .then(response => response.json())
+        .then(data => {
+            const references = Array.isArray(data.references) && data.references.length > 0
+                ? data.references
+                : fallbackReferences;
+
+            references.forEach(ref => {
+                const li = document.createElement('li');
+                li.textContent = ref;
+                referencesList.appendChild(li);
+            });
+        })
+        .catch(() => {
+            fallbackReferences.forEach(ref => {
+                const li = document.createElement('li');
+                li.textContent = ref;
+                referencesList.appendChild(li);
+            });
+        });
+}
+
 let pcms = [];
 let lastFiltered = [];
 
@@ -84,27 +145,60 @@ function updateSearchStatus(message) {
     }
 }
 
-function populateResultsDropdown(filtered) {
-    const select = document.getElementById('result-select');
-    select.innerHTML = '';
+function populateResultsList(filtered) {
+    const listContainer = document.getElementById('materials-list');
+    listContainer.innerHTML = '';
 
     if (!filtered || filtered.length === 0) {
-        select.disabled = true;
-        const opt = document.createElement('option');
-        opt.value = '';
-        opt.textContent = 'No results';
-        select.appendChild(opt);
+        const noMaterialsMsg = document.createElement('p');
+        noMaterialsMsg.className = 'no-materials';
+        noMaterialsMsg.textContent = 'No materials found';
+        listContainer.appendChild(noMaterialsMsg);
         return;
     }
 
-    select.disabled = false;
-
     filtered.forEach(pcm => {
-        const opt = document.createElement('option');
-        opt.value = pcm.id;
-        opt.textContent = `${pcm.id} — ${pcm.name}`;
-        select.appendChild(opt);
+        const item = document.createElement('div');
+        item.className = 'material-item';
+        item.dataset.id = pcm.id;
+        
+        const idEl = document.createElement('div');
+        idEl.className = 'material-id';
+        idEl.textContent = pcm.id;
+        
+        const nameEl = document.createElement('div');
+        nameEl.className = 'material-name';
+        nameEl.textContent = pcm.name;
+        
+        item.appendChild(idEl);
+        item.appendChild(nameEl);
+        
+        item.addEventListener('click', function() {
+            selectMaterial(pcm.id, filtered);
+        });
+        
+        listContainer.appendChild(item);
     });
+}
+
+function selectMaterial(id, filtered) {
+    // Update active state in list
+    const allItems = document.querySelectorAll('.material-item');
+    allItems.forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    const activeItem = document.querySelector(`.material-item[data-id="${id}"]`);
+    if (activeItem) {
+        activeItem.classList.add('active');
+    }
+    
+    // Find and display PCM details
+    const pcm = filtered.find(p => p.id === id);
+    if (pcm) {
+        updateSelectedPcmDetails(pcm);
+        drawChart(getSelectedPropertyKey());
+    }
 }
 
 function findPcmById(id) {
@@ -155,8 +249,9 @@ function updateSelectedPcmDetails(pcm) {
 }
 
 function drawChart(propertyKey) {
-    const selectedIdEl = document.getElementById('result-select');
-    const selectedPcmId = selectedIdEl ? selectedIdEl.value : null;
+    const selectedPcmName = document.getElementById('selected-pcm-name').textContent;
+    // Extract the ID from "ID — Name" format
+    const selectedPcmId = selectedPcmName.split(' — ')[0];
     if (typeof drawPropertyChart === 'function') {
         drawPropertyChart('property-chart', propertyKey, propertyDefs, selectedPcmId);
     }
@@ -186,14 +281,13 @@ function applyFilters() {
 
     if (filtered.length === 0) {
         updateSearchStatus('Search completed: no matching PCMs.');
-        populateResultsDropdown([]);
+        populateResultsList([]);
         updateSelectedPcmDetails(null);
     } else {
         updateSearchStatus(`Search completed: ${filtered.length} PCM(s) found.`);
-        populateResultsDropdown(filtered);
+        populateResultsList(filtered);
         // Default to the first result
-        updateSelectedPcmDetails(filtered[0]);
-        document.getElementById('result-select').value = filtered[0].id;
+        selectMaterial(filtered[0].id, filtered);
     }
 
     const propertyKey = getSelectedPropertyKey();
@@ -211,10 +305,9 @@ document.getElementById('pcm-filters-form').addEventListener('reset', function (
     setTimeout(() => {
         lastFiltered = pcms.slice();
         updateSearchStatus('Filters reset: showing all PCMs.');
-        populateResultsDropdown(lastFiltered);
+        populateResultsList(lastFiltered);
         if (lastFiltered.length > 0) {
-            updateSelectedPcmDetails(lastFiltered[0]);
-            document.getElementById('result-select').value = lastFiltered[0].id;
+            selectMaterial(lastFiltered[0].id, lastFiltered);
         } else {
             updateSelectedPcmDetails(null);
         }
@@ -228,22 +321,15 @@ document.getElementById('property-select').addEventListener('change', function (
     drawChart(propertyKey);
 });
 
-document.getElementById('result-select').addEventListener('change', function () {
-    const id = this.value;
-    const pcm = findPcmById(id);
-    updateSelectedPcmDetails(pcm);
-    drawChart(getSelectedPropertyKey());
-});
-
 // Load PCM data (CSV) and property data (CSV), then run initial render
 Promise.all([loadPcms(), loadPropertyData()]).then(function () {
     updateSearchStatus(lastFiltered.length > 0 ? 'Showing all PCMs (no filters applied yet).' : 'No PCM data loaded. Check rawdata/pcms.csv.');
-    populateResultsDropdown(lastFiltered);
+    populateResultsList(lastFiltered);
     if (lastFiltered.length > 0) {
-        updateSelectedPcmDetails(lastFiltered[0]);
-        document.getElementById('result-select').value = lastFiltered[0].id;
+        selectMaterial(lastFiltered[0].id, lastFiltered);
     } else {
         updateSelectedPcmDetails(null);
     }
     drawChart(getSelectedPropertyKey());
+    loadAndDisplayReferences();
 });
