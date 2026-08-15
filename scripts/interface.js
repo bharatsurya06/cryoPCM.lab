@@ -98,32 +98,38 @@ function plotProperty(propertyKey, propertyData) {
         mode: 'lines+markers',
         name: propertyData.displayName,
         line: { 
-            color: '#1f77b4', 
-            width: 2 
+            color: '#a03fea', 
+            width: 2
         },
         marker: { 
-            size: 8,
-            color: '#1f77b4'
+            size: 5,
+            color: '#a03fea', 
         }
     };
 
     const layout = {
         title: {
             text: propertyData.displayName,
-            font: { size: 14 }
+            font: { size: 18 }
+            
         },
         xaxis: {
             title: `Temperature (${propertyData.units.temperature})`,
+            tickfont: { size: 14, color: '#000000', weight: 'bold' },
+            titlefont: { size: 14, color: '#060606', weight: 'bold' },
             showgrid: true,
-            zeroline: false
+            zeroline: false,
+            
         },
         yaxis: {
             title: `${propertyData.symbol} (${propertyData.units.value})`,
+            tickfont: { size: 14, color: '#000000', weigth: 'bold' },
+            titlefont: { size: 14, color: '#060606', weight: 'bold' },
             showgrid: true,
             zeroline: false
         },
-        margin: { t: 50, r: 30, b: 50, l: 70 },
-        plot_bgcolor: '#fafbff',
+        margin: { t: 50, r: 30, b: 60, l: 70 },
+        plot_bgcolor: '#edf0df',
         paper_bgcolor: '#ffffff'
         
     };
