@@ -20,20 +20,16 @@
     </div>
 </header>
 
-<main class="main-content-80">
-    <section class="relevant-info-section">
-        <h2>Data Sources</h2>
+<main class="main">
         <div class="info-paragraph">
             <h3>Journal Articles & References</h3>
-            <ul id="data-sources-list">
-                <li>Loading data sources...</li>
-            </ul>
+            <ul id="data-sources-list"> </ul>
         </div>
-    </section>
+    
 </main>
 
 <footer>
-    <p>&copy; <span id="year"></span> CryoPCM.lab. All rights reserved.</p>
+    <p> cryoPCM.lab | CBSradon | &copy; <span id="year"></span>  </p>
 </footer>
 
 
@@ -71,6 +67,8 @@ function loadDataSources() {
             dataSources.forEach(source => {
                 const li = document.createElement('li');
                 li.textContent = source.citation || source.title;
+                li.style.lineHeight = '1.5';
+                li.style.marginBottom = '12px';
                 dataSourcesList.appendChild(li);
             });
         })

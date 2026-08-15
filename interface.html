@@ -21,94 +21,105 @@
     </div>
 </header>
 
-<main class="main-content-80">
+<main class="main">
     <div class="interface-layout">
         <!-- Left zone: filters / inputs -->
         <section class="zone-left">
-            <h2>Filter Materials</h2>
-        <form class="pcm-filters" id="pcm-filters-form">
-            <div class="form-row">
-                <label for="temperature-range"> Application temperature range (K)</label>
-                <div>
-                    <input type="number" id="tmin" name="tmin" placeholder="Tmin : 100 K">
-                    <span>to</span>
-                    <input type="number" id="tmax" name="tmax" placeholder="Tmax :250 K">
+                <h2>Filter Materials</h2>
+            <form class="pcm-filters" id="pcm-filters-form">
+                <div class="form-row">
+                    <label for="temperature-range"> Application temperature range (K)</label>
+                    <div>
+                        <input type="number" id="tmin" name="tmin" placeholder="Tmin : 100 K">
+                        <span>to</span>
+                        <input type="number" id="tmax" name="tmax" placeholder="Tmax :250 K">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="button">Apply filters</button>
+                    <button type="reset" class="button">Reset</button>     
+                </div>
+            </form>
+        </section>
+
+        <section class="zone-right">
+
+            <div class="materials-container">
+                <h3>Suitable PCMs choices for your application</h3>
+                <div class="materials-list" id="materials-list">
+                    <p class="no-materials">Please specify the application temperature range !!!</p>
                 </div>
             </div>
-            <div class="form-actions">
-                <button type="submit" class="button">Apply filters</button>
-                <button type="reset" class="button">Reset</button>
-            </div>
-        </form>
-
-        <div class="materials-container">
-            <h3>Available Materials</h3>
-            <div class="materials-list" id="materials-list">
-                <p class="no-materials">Loading materials...</p>
+        </section>
+    </div>
+ 
+    <div class="zone-top">
+        <div class="zone-top-header">
+            <div>
+                <h2>Selected PCM : <span id="selected-pcm-name" class="selected-pcm-name"></span></h2> 
             </div>
         </div>
+        <div class="pcm-cards">
+            <div class="pcm-card">
+                <h3>Noraml freezing point temperature (K)</h3>
+                <p id="prop-melting-point">–</p>
+            </div>
+            <div class="pcm-card">
+                <h3>Normal boiling point temperature (K)</h3>
+                <p id="prop-boiling-point">–</p>
+            </div>
+            <div class="pcm-card">
+                <h3>Latent heat of fusion (kJ/kg)</h3>
+                <p id="prop-latent-heat">–</p>
+            </div>
+            <div class="pcm-card">
+                <h3>Flash point temperature (K)</h3>
+                <p id="prop-flash-point">–</p>
+            </div>
+            <div class="pcm-card">
+                <h3>Hazard Index</h3>
+                <p id="prop-safety-rating">–</p>
+            </div>
+            <div class="pcm-card">
+                <h3>Cost ($ per litre)</h3>
+                <p id="prop-cost">–</p>
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>
+
+    <br>
+
+    <!-- Bottom-right: Property plots from PCM JSON -->
+    <div class="zone-bottom">
+        <h2>Property Plots</h2>
+        <p>
+            Temperature-dependent thermophsyical property data
+        </p>
+        <div class="charts-grid">
+            <div id="plot-solid-density" class="property-chart"></div>
+            <div id="plot-liquid-density" class="property-chart"></div>
+            <div id="plot-solid-thermal-conductivity" class="property-chart"></div>
+            <div id="plot-liquid-thermal-conductivity" class="property-chart"></div>
+            <div id="plot-solid-specific-heat" class="property-chart"></div>
+            <div id="plot-liquid-specific-heat" class="property-chart"></div>
+        </div>
+    </div>
+
+    <section class="relevant-info-section">
+        <h2> How to use ?</h2>
+        <li> <p> Specify the minimum and maximum temperature limits between which cold energy storage is desired</p> </li>
+        <li><p> Click on "Apply Filters" to view the suitable PCMs </p></li>
+        <li><p> Choose the PCM to view the properties in the sections below </p></li>
     </section>
 
-    <!-- Right zone: split vertically into results (top) and graph (bottom) -->
-    <section class="zone-right">
-        <!-- Top-right: selected PCM details and property dropdown -->
-        <div class="zone-top">
-            <div class="zone-top-header">
-                <div>
-                    <h2>Selected PCM : <span id="selected-pcm-name" class="selected-pcm-name"></span></h2> 
-                </div>
-            </div>
-            <div class="pcm-cards">
-                <div class="pcm-card">
-                    <h3>Melting point temperature (K)</h3>
-                    <p id="prop-melting-point">–</p>
-                </div>
-                <div class="pcm-card">
-                    <h3>Boiling point temperature (K)</h3>
-                    <p id="prop-boiling-point">–</p>
-                </div>
-                <div class="pcm-card">
-                    <h3>Latent heat (kJ/kg)</h3>
-                    <p id="prop-latent-heat">–</p>
-                </div>
-                <div class="pcm-card">
-                    <h3>Flash point temperature (K)</h3>
-                    <p id="prop-flash-point">–</p>
-                </div>
-                <div class="pcm-card">
-                    <h3>Safety classification</h3>
-                    <p id="prop-safety-rating">–</p>
-                </div>
-                <div class="pcm-card">
-                    <h3>Cost (per litre)</h3>
-                    <p id="prop-cost">–</p>
-                </div>
-            </div>
-            <br>
-            <br>
-        </div>
+   
 
-        <!-- Bottom-right: Property plots from PCM JSON -->
-        <div class="zone-bottom">
-            <h2>Property Plots</h2>
-            <p>
-                Temperature-dependent properties loaded from PCM JSON files.
-            </p>
-            <div class="charts-grid">
-                <div id="plot-solid-density" class="property-chart"></div>
-                <div id="plot-liquid-density" class="property-chart"></div>
-                <div id="plot-solid-thermal-conductivity" class="property-chart"></div>
-                <div id="plot-liquid-thermal-conductivity" class="property-chart"></div>
-                <div id="plot-solid-specific-heat" class="property-chart"></div>
-                <div id="plot-liquid-specific-heat" class="property-chart"></div>
-            </div>
-        </div>
-    </section>
-</div>
 
     <!-- Relevant Information Section -->
     <section class="relevant-info-section">
-        <h2>Relevant Information</h2>
+        <h2>Other Information</h2>
         
         <div class="info-paragraph">
             <h3>Flash Point Temperature (K)</h3>
@@ -117,15 +128,17 @@
 
         <div class="info-paragraph">
             <h3>Safety Classification</h3>
-            <p>The hazard index (HI) is with respect to the physical hazard of the system and does not include the health hazard.  A standardized rating system (e.g., GHS and NFPA classification) is used as the basis for this classification. Accordingly, lower HI values meant more safer.  </p>
+            <li> <p> The hazard index (HI) is with respect to the physical hazard of the system and does not include the health hazard.  </p> </li> 
+            <li><p> A standardized rating system (e.g., GHS and NFPA classification) is used as the basis for this classification. </p></li> 
+            <li><p> The lower the HI value, the safer the PCM </p></li>
         </div>
 
         <div class="info-paragraph">
             <h3>Additional Clarifications</h3>
-            <p><em> The "*" indicates the value to be the maximum operating temperature of the PCM.</em></p>
-            <p><em> The melting point temperature represents an average value in cases where the PCM undergoes phase transition over range of temperatures </em></p>
-            <p><em> Data imputation was performed  in cases where there was missing data. The imputation was undertaken only when sufficient insights were available on the thermophysical peroperty variation of similiar compounds.   <em></p>
-            <p><em> The property varation shown here is only relevant to sub-ambient temperatures and cryogenic system application. In this regard, extrapolating these trends to high temperature system would be errorneous and therefore, strongly not recommended.   <em></p>
+            <li><p> The "*" indicates the value to be the maximum operating temperature of the PCM.</p></li>
+            </li><p> The melting point temperature represents an average value in cases where the PCM undergoes phase transition over range of temperatures </p> </li>
+            <li><p>Data imputation was performed  in cases where there was missing data. The imputation was undertaken only when sufficient insights were available on the thermophysical peroperty variation of similiar compounds.</p> </li>
+            <li><p>The property varation shown here is only relevant to sub-ambient temperatures and cryogenic system application. In this regard, extrapolating these trends to high temperature system would be errorneous and therefore, strongly not recommended.</p> </li>
 
         </div>
 

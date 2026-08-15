@@ -2,7 +2,7 @@
   "properties": {
     "solid_density": {
       "displayName": "Solid Phase Density",
-      "symbol": "ρ_s",
+      "symbol": "Solid Phase Density",
       "units": {
         "temperature": "K",
         "value": "kg/m³"
@@ -12,15 +12,15 @@
         "maxTemp": 309.65
       },
       "data": [
-        { "T": 250, "val": 912.0 },
-        { "T": 270, "val": 903.0 },
-        { "T": 290, "val": 891.0 },
-        { "T": 309.65, "val": 878.0 }
+        { "T": 100, "val": 912.0 },
+        { "T": 120, "val": 903.0 },
+        { "T": 140, "val": 891.0 },
+        { "T": 158, "val": 878.0 }
       ]
     },
     "liquid_density": {
       "displayName": "Liquid Phase Density",
-      "symbol": "ρ_l",
+      "symbol": "Liquid Phase Density",
       "units": {
         "temperature": "K",
         "value": "kg/m³"
@@ -38,10 +38,10 @@
     },
     "solid_thermal_conductivity": {
       "displayName": "Solid Thermal Conductivity",
-      "symbol": "k_s",
+      "symbol": "Solid Thermal Conductivity",
       "units": {
         "temperature": "K",
-        "value": "W/(m·K)"
+        "value": "W/m·K"
       },
       "validRange": {
         "minTemp": 250,
@@ -55,10 +55,10 @@
     },
     "liquid_thermal_conductivity": {
       "displayName": "Liquid Thermal Conductivity",
-      "symbol": "k_l",
+      "symbol": "Liquid Thermal Conductivity",
       "units": {
         "temperature": "K",
-        "value": "W/(m·K)"
+        "value": "W/m·K"
       },
       "validRange": {
         "minTemp": 309.65,
@@ -72,10 +72,10 @@
     },
     "solid_specific_heat": {
       "displayName": "Solid Specific Heat Capacity",
-      "symbol": "c_p,s",
+      "symbol": "Solid Specific Heat Capacity",
       "units": {
         "temperature": "K",
-        "value": "J/(kg·K)"
+        "value": "J/kg·K"
       },
       "validRange": {
         "minTemp": 250,
@@ -89,10 +89,10 @@
     },
     "liquid_specific_heat": {
       "displayName": "Liquid Specific Heat Capacity",
-      "symbol": "c_p,l",
+      "symbol": "Liquid Specific Heat Capacity",
       "units": {
         "temperature": "K",
-        "value": "J/(kg·K)"
+        "value": "J/kg·K"
       },
       "validRange": {
         "minTemp": 309.65,

@@ -73,7 +73,11 @@ function drawChart(pcmId) {
 }
 
 function plotProperty(propertyKey, propertyData) {
-    const chartId = `plot-${propertyKey}`;
+
+    const formattedKey = propertyKey.replace(/_/g, '-');
+    const chartId = `plot-${formattedKey}`; 
+
+    // const chartId = `plot-${propertyKey}`;
     const chartElement = document.getElementById(chartId);
     if (!chartElement) {
         console.warn(`Chart element not found: ${chartId}`);
@@ -121,6 +125,7 @@ function plotProperty(propertyKey, propertyData) {
         margin: { t: 50, r: 30, b: 50, l: 70 },
         plot_bgcolor: '#fafbff',
         paper_bgcolor: '#ffffff'
+        
     };
 
     const config = {
