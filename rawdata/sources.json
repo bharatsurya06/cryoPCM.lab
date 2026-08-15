@@ -4,13 +4,107 @@
       "title": "",
       "citation": "Normal Boiling Points for Organic Compounds: Correlation and Prediction by a Quantitative Structure-Property Relationship., Journal of Chem Inf comp science, 1998, 38, 6, 28-41"
     },
+
     {
-      "title": "PCM Master List",
-      "citation": "Add journal article citation here as a single sentence."
+      "title": "",
+      "citation": " L. Yang, U. Villalobos, B. Akhmetov, A. Gil, J.O. Khor, A. Palacios, Y. Li, Y. Ding, L.F. Cabeza, W.L. Tan, et al., A comprehensive review on sub-zero temperature cold thermal energy storage materials, technologies, and applications: State of the art and recent developments, Appl. Energy 288 (2021) 116555.  "
+    },
+
+    {
+      "title": "",
+      "citation": "  A. Vecchi, Y. Li, Y. Ding, P. Mancarella, A. Sciacovelli, Liquid air energy storage (LAES): A review on technology state-of-the-art, integration pathways and future perspectives, Adv. Appl. Energy 3 (2021) 100047. "
+    },
+        {
+      "title": "",
+      "citation": " J. Chen, B. An, L. Yang, J. Wang, J. Hu, Construction and optimization of the cold storage process based on phase change materials used for liquid air energy storage system, J. Energy Storage 41 (2021) 102873.  "
+    },
+
+        {
+      "title": "",
+      "citation": "  E. Oró, A. De Gracia, A. Castell, M.M. Farid, L.F. Cabeza, Review on phase change materials (PCMs) for cold thermal energy storage applications, Appl. Energy 99 (2012) 513–533. "
+    },
+
+        {
+      "title": "",
+      "citation": "  G. Li, Y. Hwang, R. Radermacher, H.-H. Chun, Review of cold storage materials for subzero applications, Energy 51 (2013) 1–17. "
+    },
+
+        {
+      "title": "",
+      "citation": "  F. Edelstein, The behavior of cryogenic phase change materials used for IR sensor thermal control in space, SAE Trans. (1991) 1774–1782. "
+    },
+
+
+        {
+      "title": "",
+      "citation": "  Z. Zhong, Z. Rui, Z. Wu, X. Zhai, S. Yang, H. Peng, Study on thermophysical properties of C7 C9 binary alkane PCM and preparation of anti-volatile emulsion template for cryogenic thermal energy "
+    },
+
+        {
+      "title": "",
+      "citation": " Y. Zhang, D. Baiocco, A.N. Mustapha, X. Zhang, Q. Yu, G. Wellio, Z. Zhang, Y. Li, Hydrocolloids: Nova materials assisting encapsulation of volatile phase change materials for cryogenic energy transport and storage, Chem. Eng. J. 382 (2020) 123028.  "
+    },
+
+        {
+      "title": "",
+      "citation": " E. Oró, C. Barreneche, M.M. Farid, L.F. Cabeza, Experimental study on the selection of phase change materials for low temperature applications, Renew. Energy 57 (2013) 130–136.  "
+    },
+
+        {
+      "title": "",
+      "citation": "HMIS, Hazardous Materials Identification System (HMIS) Implementation Man-ual, fourth ed., American Coatings Association, Washington, D.C., 2015, URL: https://www.paint.org/hmis/."
+    },
+
+
+        {
+      "title": "",
+      "citation": "C. Vélez, M. Khayet, J.O. De Zárate, Temperature-dependent thermal prop-erties of solid/liquid phase change even-numbered n-alkanes: n-hexadecane, n-octadecane and n-eicosane, Appl. Energy 143 (2015) 383–394."
+    },
+
+        {
+      "title": "",
+      "citation": "C. Vélez, J.M.O. de Zárate, M. Khayet, Thermal properties of n-pentadecane, n-heptadecane and n-nonadecane in the solid/liquid phase change region, Int. J. Therm. Sci. 94 (2015) 139–146."
     },
     {
-      "title": "Property Definitions",
-      "citation": "Add journal article citation here as a single sentence."
+      "title": "",
+      "citation": ". Tomassetti, A. Aquilanti, P.F. Muciaccia, G. Coccia, C. Mankel, E.A. Koenders, G. Di Nicola, A review on thermophysical properties and thermal stability of sugar alcohols as phase change materials, J. Energy Storage 55 (2022) 105456."
+    },
+
+        {
+      "title": "",
+      "citation": "R. Dreisbach, R. Martin, Physical data on some organic compounds, Ind. Eng. Chem. 41 (12) (1949) 2875–2878."
+    },
+
+
+    {
+      "title": "",
+      "citation": "C.L. Yaws, Transport properties of chemicals and hydrocarbons, William Andrew, 2014."
+    },
+
+    {
+      "title": "",
+      "citation": "  W.E. Acree Jr., Thermodynamic properties of organic compounds: enthalpy of fusion and melting point temperature compilation, Thermochim. Acta 189 (1) (1991) 37–56 "
+    },
+
+        {
+      "title": "",
+      "citation": " R. Song, T. Zou, J. Chen, X. Hou, X. Han, Study on the physical properties of LiCl solution, in: IOP Conference Series: Materials Science and Engineering, vol. 562, (1) IOP Publishing, 2019, 012102  "
+    },
+    {
+      "title": "",
+      "citation": "Å. Melinder, Thermophysical properties of aqueous solutions used as secondary working fluids (Ph.D. thesis), KTH, 2007."
+    },
+    {
+      "title":"",
+      "citation" : "PlussPCM, PLUSS PCM Datasheet."
+
+    },
+    {
+      "title":"",
+      "citation" : "PCM Prodcuts, PCM Products Datasheet."
+
     }
-  ]
+
+
+   ]
 }
