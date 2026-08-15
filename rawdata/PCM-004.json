@@ -1,0 +1,108 @@
+{
+  "properties": {
+    "solid_density": {
+      "displayName": "Solid Phase Density",
+      "symbol": "ρ_s",
+      "units": {
+        "temperature": "K",
+        "value": "kg/m³"
+      },
+      "validRange": {
+        "minTemp": 250,
+        "maxTemp": 309.65
+      },
+      "data": [
+        { "T": 250, "val": 912.0 },
+        { "T": 270, "val": 903.0 },
+        { "T": 290, "val": 891.0 },
+        { "T": 309.65, "val": 878.0 }
+      ]
+    },
+    "liquid_density": {
+      "displayName": "Liquid Phase Density",
+      "symbol": "ρ_l",
+      "units": {
+        "temperature": "K",
+        "value": "kg/m³"
+      },
+      "validRange": {
+        "minTemp": 309.65,
+        "maxTemp": 400
+      },
+      "data": [
+        { "T": 309.65, "val": 778.0 },
+        { "T": 330, "val": 765.0 },
+        { "T": 360, "val": 746.0 },
+        { "T": 400, "val": 721.0 }
+      ]
+    },
+    "solid_thermal_conductivity": {
+      "displayName": "Solid Thermal Conductivity",
+      "symbol": "k_s",
+      "units": {
+        "temperature": "K",
+        "value": "W/(m·K)"
+      },
+      "validRange": {
+        "minTemp": 250,
+        "maxTemp": 309.65
+      },
+      "data": [
+        { "T": 250, "val": 0.24 },
+        { "T": 280, "val": 0.22 },
+        { "T": 309.65, "val": 0.21 }
+      ]
+    },
+    "liquid_thermal_conductivity": {
+      "displayName": "Liquid Thermal Conductivity",
+      "symbol": "k_l",
+      "units": {
+        "temperature": "K",
+        "value": "W/(m·K)"
+      },
+      "validRange": {
+        "minTemp": 309.65,
+        "maxTemp": 400
+      },
+      "data": [
+        { "T": 309.65, "val": 0.15 },
+        { "T": 350, "val": 0.148 },
+        { "T": 400, "val": 0.145 }
+      ]
+    },
+    "solid_specific_heat": {
+      "displayName": "Solid Specific Heat Capacity",
+      "symbol": "c_p,s",
+      "units": {
+        "temperature": "K",
+        "value": "J/(kg·K)"
+      },
+      "validRange": {
+        "minTemp": 250,
+        "maxTemp": 309.65
+      },
+      "data": [
+        { "T": 250, "val": 1850 },
+        { "T": 280, "val": 1980 },
+        { "T": 309.65, "val": 2120 }
+      ]
+    },
+    "liquid_specific_heat": {
+      "displayName": "Liquid Specific Heat Capacity",
+      "symbol": "c_p,l",
+      "units": {
+        "temperature": "K",
+        "value": "J/(kg·K)"
+      },
+      "validRange": {
+        "minTemp": 309.65,
+        "maxTemp": 400
+      },
+      "data": [
+        { "T": 309.65, "val": 2380 },
+        { "T": 350, "val": 2450 },
+        { "T": 400, "val": 2540 }
+      ]
+    }
+  }
+}

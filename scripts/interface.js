@@ -1,66 +1,7 @@
 // Set current year in footer
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Data Sources Modal Functions
-function openDataModal() {
-    const modal = document.getElementById('dataModal');
-    if (modal) {
-        modal.style.display = 'block';
-    }
-}
-
-function closeDataModal() {
-    const modal = document.getElementById('dataModal');
-    if (modal) {
-        modal.style.display = 'none';
-    }
-}
-
-// Close modal when clicking outside of it
-window.onclick = function(event) {
-    const modal = document.getElementById('dataModal');
-    if (event.target === modal) {
-        modal.style.display = 'none';
-    }
-}
-
-// Load and display references from the JSON dataset or fallback list
-function loadAndDisplayReferences() {
-    const referencesList = document.getElementById('references-list');
-    if (!referencesList) {
-        return;
-    }
-
-    referencesList.innerHTML = '';
-
-    const fallbackReferences = [
-        'rawdata/property_series.json — primary property-series dataset used for the current material view.',
-        'rawdata/pcms.csv — master list of material metadata and key property summaries.',
-        'documentation/property_data.csv — source of property definitions and the corresponding variable relationships.',
-        'Open scientific literature and public datasheets compiled for cryogenic PCM research context.'
-    ];
-
-    fetch('rawdata/property_series.json')
-        .then(response => response.json())
-        .then(data => {
-            const references = Array.isArray(data.references) && data.references.length > 0
-                ? data.references
-                : fallbackReferences;
-
-            references.forEach(ref => {
-                const li = document.createElement('li');
-                li.textContent = ref;
-                referencesList.appendChild(li);
-            });
-        })
-        .catch(() => {
-            fallbackReferences.forEach(ref => {
-                const li = document.createElement('li');
-                li.textContent = ref;
-                referencesList.appendChild(li);
-            });
-        });
-}
+// # logic for pcm search and display
 
 let pcms = [];
 let lastFiltered = [];
@@ -76,7 +17,7 @@ function parsePcmsCsv(csvText) {
         const values = lines[i].split(',').map(v => v.trim());
         const obj = {};
         headers.forEach((h, j) => {
-            obj[h] = numericPcmFields.indexOf(h) >= 0 ? parseFloat(values[j]) : (values[j] || '');
+            obj[h] = values[j];
         });
         rows.push(obj);
     }
@@ -98,44 +39,115 @@ function loadPcms() {
 
 // Property definitions for polynomial property(T) = a*T^2 + b*T + c
 // Loaded from documentation/property_data.csv
-let propertyDefs = [];
 
-function parsePropertyDataCsv(csvText) {
-    const lines = csvText.trim().split(/\r?\n/);
-    if (lines.length < 2) return [];
-    const rows = [];
-    // Skip header (line 0), parse remaining lines by fixed column order:
-    // 0: pcmId, 1: name, 2: propertyType, 3: a, 4: b, 5: c, 6: tmin, 7: tmax
-    for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(',').map(v => v.trim());
-        if (!values[0]) continue;
-        rows.push({
-            pcmId: values[0],
-            name: values[1],
-            propertyType: values[2],
-            a: parseFloat(values[3]),
-            b: parseFloat(values[4]),
-            c: parseFloat(values[5]),
-            tmin: parseFloat(values[6]),
-            tmax: parseFloat(values[7])
-        });
+
+
+function drawChart(pcmId) {
+    if (!pcmId) {
+        clearAllCharts();
+        return;
     }
-    return rows;
-}
 
-function loadPropertyData() {
-    return fetch('documentation/property_data.csv')
-        .then(response => response.text())
-        .then(text => {
-            propertyDefs = parsePropertyDataCsv(text);
+    const jsonPath = `rawdata/${pcmId}.json`;
+    
+    fetch(jsonPath)
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to load PCM data');
+            return response.json();
         })
-        .catch(() => {
-            propertyDefs = [];
+        .then(data => {
+            const properties = data.properties;
+            const propertyKeys = ['solid_density', 'liquid_density', 'solid_thermal_conductivity', 'liquid_thermal_conductivity', 'solid_specific_heat', 'liquid_specific_heat'];
+            
+            propertyKeys.forEach(key => {
+                const prop = properties[key];
+                if (prop) {
+                    plotProperty(key, prop);
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error loading PCM data:', error);
+            clearAllCharts();
         });
 }
 
-function getSelectedPropertyKey() {
-    return document.getElementById('property-select').value;
+function plotProperty(propertyKey, propertyData) {
+    const chartId = `plot-${propertyKey}`;
+    const chartElement = document.getElementById(chartId);
+    if (!chartElement) {
+        console.warn(`Chart element not found: ${chartId}`);
+        return;
+    }
+
+    console.log(`Plotting ${propertyKey}:`, propertyData);
+
+    const temperatures = propertyData.data.map(d => d.T);
+    const values = propertyData.data.map(d => d.val);
+
+    console.log(`Temperatures: ${temperatures}, Values: ${values}`);
+
+    const trace = {
+        x: temperatures,
+        y: values,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: propertyData.displayName,
+        line: { 
+            color: '#1f77b4', 
+            width: 2 
+        },
+        marker: { 
+            size: 8,
+            color: '#1f77b4'
+        }
+    };
+
+    const layout = {
+        title: {
+            text: propertyData.displayName,
+            font: { size: 14 }
+        },
+        xaxis: {
+            title: `Temperature (${propertyData.units.temperature})`,
+            showgrid: true,
+            zeroline: false
+        },
+        yaxis: {
+            title: `${propertyData.symbol} (${propertyData.units.value})`,
+            showgrid: true,
+            zeroline: false
+        },
+        margin: { t: 50, r: 30, b: 50, l: 70 },
+        plot_bgcolor: '#fafbff',
+        paper_bgcolor: '#ffffff'
+    };
+
+    const config = {
+        responsive: true,
+        displayModeBar: false
+    };
+
+    // Clear any existing plot first
+    Plotly.purge(chartId);
+    
+    // Set the element height explicitly to match CSS
+    chartElement.style.height = '400px';
+    
+    // Create the plot
+    Plotly.newPlot(chartId, [trace], layout, config);
+}
+
+function clearAllCharts() {
+    const chartIds = ['plot-solid-density', 'plot-liquid-density', 'plot-solid-thermal-conductivity', 'plot-liquid-thermal-conductivity', 'plot-solid-specific-heat', 'plot-liquid-specific-heat'];
+    
+    chartIds.forEach(chartId => {
+        const element = document.getElementById(chartId);
+        if (element) {
+            Plotly.purge(chartId);
+            element.innerHTML = '';
+        }
+    });
 }
 
 function updateSearchStatus(message) {
@@ -197,7 +209,7 @@ function selectMaterial(id, filtered) {
     const pcm = filtered.find(p => p.id === id);
     if (pcm) {
         updateSelectedPcmDetails(pcm);
-        drawChart(getSelectedPropertyKey());
+        drawChart(pcm.id);
     }
 }
 
@@ -229,31 +241,22 @@ function updateSelectedPcmDetails(pcm) {
         nameEl.textContent = `${pcm.id} — ${pcm.name}`;
     }
     if (meltingEl) {
-        meltingEl.textContent = `${pcm.meltingPointK.toFixed(1)} K`;
+        meltingEl.textContent = pcm.meltingPointK || '–';
     }
     if (boilingEl) {
-        boilingEl.textContent = `${pcm.boilingPointK.toFixed(1)} K`;
+        boilingEl.textContent = pcm.boilingPointK || '–';
     }
     if (latentEl) {
-        latentEl.textContent = `${pcm.latentHeat.toFixed(1)} kJ/kg`;
+        latentEl.textContent = pcm.latentHeat || '–';
     }
     if (flashEl) {
-        flashEl.textContent = `${pcm.flashPointK.toFixed(1)} K`;
+        flashEl.textContent = pcm.flashPointK || '–';
     }
     if (safetyEl) {
-        safetyEl.textContent = pcm.safetyRating;
+        safetyEl.textContent = pcm.safetyRating || '–';
     }
     if (costEl) {
-        costEl.textContent = `${pcm.cost.toFixed(2)} (relative units)`;
-    }
-}
-
-function drawChart(propertyKey) {
-    const selectedPcmName = document.getElementById('selected-pcm-name').textContent;
-    // Extract the ID from "ID — Name" format
-    const selectedPcmId = selectedPcmName.split(' — ')[0];
-    if (typeof drawPropertyChart === 'function') {
-        drawPropertyChart('property-chart', propertyKey, propertyDefs, selectedPcmId);
+        costEl.textContent = pcm.cost || '–';
     }
 }
 
@@ -265,8 +268,8 @@ function applyFilters() {
     let filtered = pcms.filter(pcm => {
         // Temperature range filter: melting point within [tmin, tmax], boiling point above tmax
         if (rangeEntered) {
-            const melting = Number(pcm.meltingPointK);
-            const boiling = Number(pcm.boilingPointK);
+            const melting = parseFloat(pcm.meltingPointK);
+            const boiling = parseFloat(pcm.boilingPointK);
             if (isNaN(melting) || melting < tmin || melting > tmax) {
                 return false;
             }
@@ -283,15 +286,13 @@ function applyFilters() {
         updateSearchStatus('Search completed: no matching PCMs.');
         populateResultsList([]);
         updateSelectedPcmDetails(null);
+        clearAllCharts();
     } else {
         updateSearchStatus(`Search completed: ${filtered.length} PCM(s) found.`);
         populateResultsList(filtered);
         // Default to the first result
         selectMaterial(filtered[0].id, filtered);
     }
-
-    const propertyKey = getSelectedPropertyKey();
-    drawChart(propertyKey);
 }
 
 // Event wiring
@@ -310,15 +311,9 @@ document.getElementById('pcm-filters-form').addEventListener('reset', function (
             selectMaterial(lastFiltered[0].id, lastFiltered);
         } else {
             updateSelectedPcmDetails(null);
+            clearAllCharts();
         }
-        const propertyKey = getSelectedPropertyKey();
-        drawChart(propertyKey);
     }, 0);
-});
-
-document.getElementById('property-select').addEventListener('change', function () {
-    const propertyKey = getSelectedPropertyKey();
-    drawChart(propertyKey);
 });
 
 // Load PCM data (CSV) and property data (CSV), then run initial render
@@ -329,7 +324,6 @@ Promise.all([loadPcms(), loadPropertyData()]).then(function () {
         selectMaterial(lastFiltered[0].id, lastFiltered);
     } else {
         updateSelectedPcmDetails(null);
+        clearAllCharts();
     }
-    drawChart(getSelectedPropertyKey());
-    loadAndDisplayReferences();
 });

@@ -1,0 +1,16 @@
+{
+  "dataSources": [
+    {
+      "title": "",
+      "citation": "Normal Boiling Points for Organic Compounds: Correlation and Prediction by a Quantitative Structure-Property Relationship., Journal of Chem Inf comp science, 1998, 38, 6, 28-41"
+    },
+    {
+      "title": "PCM Master List",
+      "citation": "Add journal article citation here as a single sentence."
+    },
+    {
+      "title": "Property Definitions",
+      "citation": "Add journal article citation here as a single sentence."
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Sources - cryoPCM.lab</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/interface.css">
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <img src="assets/img/cryopcm.png" alt="CryoPCM.lab Logo" class="logo">
+        <nav class="navbar">
+            <a href="index.html" class="nav-link">About</a>
+            <a href="interface.html" class="nav-link">Start Project</a>
+            <a href="datasources.html" class="nav-link active">Data Sources</a>
+        </nav>
+    </div>
+</header>
+
+<main class="main-content-80">
+    <section class="relevant-info-section">
+        <h2>Data Sources</h2>
+        <div class="info-paragraph">
+            <h3>Journal Articles & References</h3>
+            <ul id="data-sources-list">
+                <li>Loading data sources...</li>
+            </ul>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; <span id="year"></span> CryoPCM.lab. All rights reserved.</p>
+</footer>
+
+
+
+<script>
+// Set current year in footer
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Load and display data sources from sources.json
+function loadDataSources() {
+    const dataSourcesList = document.getElementById('data-sources-list');
+    if (!dataSourcesList) {
+        return;
+    }
+
+    dataSourcesList.innerHTML = '';
+
+    fetch('rawdata/sources.json')
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to load sources');
+            return response.json();
+        })
+        .then(data => {
+            const dataSources = Array.isArray(data.dataSources) && data.dataSources.length > 0
+                ? data.dataSources
+                : [];
+
+            if (dataSources.length === 0) {
+                const noSourcesMsg = document.createElement('li');
+                noSourcesMsg.textContent = 'No data sources available';
+                dataSourcesList.appendChild(noSourcesMsg);
+                return;
+            }
+
+            dataSources.forEach(source => {
+                const li = document.createElement('li');
+                li.textContent = source.citation || source.title;
+                dataSourcesList.appendChild(li);
+            });
+        })
+        .catch(error => {
+            console.error('Error loading data sources:', error);
+            const errorMsg = document.createElement('li');
+            errorMsg.textContent = 'Unable to load data sources';
+            dataSourcesList.appendChild(errorMsg);
+        });
+}
+
+// Load data sources when page loads
+document.addEventListener('DOMContentLoaded', loadDataSources);
+</script>
+
+</body>
+</html>

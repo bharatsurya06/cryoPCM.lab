@@ -6,6 +6,7 @@
     <title>CryoPCM-Lab Sample Interface</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/interface.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
 
@@ -15,6 +16,7 @@
         <nav class="navbar">
             <a href="index.html" class="nav-link">About</a>
             <a href="interface.html" class="nav-link active">Start Project</a>
+            <a href="datasources.html" class="nav-link">Data Sources</a>
         </nav>
     </div>
 </header>
@@ -84,28 +86,21 @@
             </div>
             <br>
             <br>
-            <label>
-                Select property to plot with temperature:
-                <select id="property-select">
-                    <option value="solid-specific-heat">Solid phase specific heat capacity (kJ/kg)</option>
-                    <option value="liquid-specific-heat">Liquid phase specific heat capacity (kJ/kg)</option>
-                    <option value="solid-thermal-conductivity">Solid phase thermal conductivity (W/mK)</option>
-                    <option value="liquid-thermal-conductivity">Liquid phase thermal conductivity (W/mK)</option>
-                    <option value="solid-density">Solid phase density (kg/m³)</option>
-                    <option value="liquid-density">Liquid phase density (kg/m³)</option>
-                </select>
-            </label>
-
         </div>
 
-        <!-- Bottom-right: Plotly line plot of selected property -->
+        <!-- Bottom-right: Property plots from PCM JSON -->
         <div class="zone-bottom">
-            <h2>Property plot</h2>
+            <h2>Property Plots</h2>
             <p>
-                Line plot of the selected property as a function of temperature (Plotly.js).
+                Temperature-dependent properties loaded from PCM JSON files.
             </p>
-            <div class="chart-area">
-                <div id="property-chart"></div>
+            <div class="charts-grid">
+                <div id="plot-solid-density" class="property-chart"></div>
+                <div id="plot-liquid-density" class="property-chart"></div>
+                <div id="plot-solid-thermal-conductivity" class="property-chart"></div>
+                <div id="plot-liquid-thermal-conductivity" class="property-chart"></div>
+                <div id="plot-solid-specific-heat" class="property-chart"></div>
+                <div id="plot-liquid-specific-heat" class="property-chart"></div>
             </div>
         </div>
     </section>
@@ -127,39 +122,15 @@
 
         <div class="info-paragraph">
             <h3>Additional Clarifications</h3>
-            <p><em>Placeholder for additional information to be added...</em></p>
+            <p><em> The "*" indicates the value to be the maximum operating temperature of the PCM.</em></p>
         </div>
 
         <div class="info-paragraph">
             <h3>Data Sources</h3>
-            <p>All material property data has been compiled from peer-reviewed scientific literature and open sources. <button onclick="openDataModal()" class="disclaimer-button">View data sources and references</button>.</p>
+            <p>All material property data has been compiled from peer-reviewed scientific literature and open sources. <a href="datasources.html" target="_blank">View data sources and references</a>.</p>
         </div>
 
     </section>
-
-    <!-- Data Sources Modal -->
-    <div id="dataModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Data Sources and References</h2>
-                <button class="close-btn" onclick="closeDataModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p><strong>Material Property Data Sources</strong></p>
-                <p>The thermophysical properties of Phase Change Materials (PCMs) included in this database have been compiled from the following sources:</p>
-
-                <ul id="references-list">
-                    <li>Loading references...</li>
-                </ul>
-
-                <p><strong>Data Quality Notice:</strong> All data have been verified against original sources where possible. Please refer to the original publications for detailed methodologies and measurement conditions.</p>
-            </div>
-            <div class="modal-footer">
-                <button onclick="closeDataModal()" class="button">Close</button>
-            </div>
-        </div>
-    </div>
-
 </main>
 
 <footer>
@@ -169,7 +140,6 @@
 </footer>
 
 <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
-<script src="scripts/plot-visualization.js"></script>
 <script src="scripts/interface.js"></script>
 
 </body>
